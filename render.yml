@@ -1,67 +1,76 @@
 services:
   - type: web
+    name: multi-nginx
+    runtime: docker
+    rootDir: nginx
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SERVER_HOST
+        value: multi-server
+
+  - type: web
     name: multi-server
     runtime: docker
-    repo: https://github.com/daisoaihiep/multi-docker
-    region: singapore
-    plan: free
     rootDir: server
+    plan: free
+    region: singapore
     dockerfilePath: ./Dockerfile
     envVars:
       - key: REDIS_HOST
         fromService:
-          name: multi-redis
           type: redis
+          name: multi-redis
           property: host
       - key: REDIS_PORT
         fromService:
-          name: multi-redis
           type: redis
+          name: multi-redis
           property: port
       - key: PGHOST
         fromService:
-          name: multi-postgres
           type: postgres
+          name: multi-postgres
           property: host
       - key: PGPORT
         fromService:
-          name: multi-postgres
           type: postgres
+          name: multi-postgres
           property: port
       - key: PGUSER
         fromService:
-          name: multi-postgres
           type: postgres
+          name: multi-postgres
           property: user
       - key: PGPASSWORD
         fromService:
-          name: multi-postgres
           type: postgres
+          name: multi-postgres
           property: password
       - key: PGDATABASE
         fromService:
-          name: multi-postgres
           type: postgres
+          name: multi-postgres
           property: database
 
   - type: worker
     name: multi-worker
     runtime: docker
-    repo: https://github.com/daisoaihiep/multi-docker
-    region: singapore
-    plan: free
     rootDir: worker
+    plan: free
+    region: singapore
     dockerfilePath: ./Dockerfile
     envVars:
       - key: REDIS_HOST
         fromService:
-          name: multi-redis
           type: redis
+          name: multi-redis
           property: host
       - key: REDIS_PORT
         fromService:
-          name: multi-redis
           type: redis
+          name: multi-redis
           property: port
 
 databases:
