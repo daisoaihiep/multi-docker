@@ -17,39 +17,18 @@ services:
     envVars:
       - key: REDIS_HOST
         fromService:
-          type: redis
           name: multi-redis
+          type: redis
           property: host
       - key: REDIS_PORT
         fromService:
-          type: redis
           name: multi-redis
+          type: redis
           property: port
-      - key: PGHOST
-        fromService:
-          type: postgres
+      - key: DATABASE_URL
+        fromDatabase:
           name: multi-postgres
-          property: host
-      - key: PGPORT
-        fromService:
-          type: postgres
-          name: multi-postgres
-          property: port
-      - key: PGUSER
-        fromService:
-          type: postgres
-          name: multi-postgres
-          property: user
-      - key: PGPASSWORD
-        fromService:
-          type: postgres
-          name: multi-postgres
-          property: password
-      - key: PGDATABASE
-        fromService:
-          type: postgres
-          name: multi-postgres
-          property: database
+          property: connectionString
 
   - type: worker
     name: multi-worker
@@ -61,13 +40,13 @@ services:
     envVars:
       - key: REDIS_HOST
         fromService:
-          type: redis
           name: multi-redis
+          type: redis
           property: host
       - key: REDIS_PORT
         fromService:
-          type: redis
           name: multi-redis
+          type: redis
           property: port
 
   - type: redis
@@ -78,6 +57,5 @@ services:
 databases:
   - name: multi-postgres
     databaseName: values
-    user: postgres
     plan: free
     region: singapore
