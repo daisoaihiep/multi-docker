@@ -49,13 +49,16 @@ services:
           type: redis
           property: port
 
+  - type: redis
+    name: multi-redis
+    plan: free
+    region: singapore
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: allow all
+
 databases:
   - name: multi-postgres
     databaseName: values
-    plan: free
-    region: singapore
-
-  - name: multi-redis
-    type: redis
     plan: free
     region: singapore
